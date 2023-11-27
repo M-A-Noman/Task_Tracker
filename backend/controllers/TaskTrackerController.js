@@ -23,6 +23,14 @@ module.exports.updateTasks = async (req, res) => {
         .catch((err) => console.log(err))
 }
 
+module.exports.singleUpdate = async (req, res) => {
+    const { _id, text } = req.body
+    TaskTrackerModel
+        .findByIdAndUpdate(_id, { text })
+        .then(() => res.send("Single update success..."))
+    .catch((err)=>console.log(err))
+}
+
 module.exports.deleteTasks = async (req, res) => {
     const { _id } = req.body
     TaskTrackerModel
