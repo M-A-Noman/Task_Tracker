@@ -4,6 +4,14 @@ module.exports.getTasks = async (req, res) => {
     res.send(tasks)
 }
 
+module.exports.getSingleTask = async (req, res) => {
+    const { id } = req.params
+    TaskTrackerModel
+        .findById(id)
+        .then((data) => res.send(data))
+        .catch((err) => console.log(err))
+}
+
 module.exports.saveTasks = async (req, res) => {
     const { text, date, reminder } = req.body
     TaskTrackerModel
@@ -13,8 +21,8 @@ module.exports.saveTasks = async (req, res) => {
             console.log(data)
             res.send(data)
         })
-
 }
+
 module.exports.updateTasks = async (req, res) => {
     const { _id, text, date, reminder } = req.body
     TaskTrackerModel
@@ -23,18 +31,10 @@ module.exports.updateTasks = async (req, res) => {
         .catch((err) => console.log(err))
 }
 
-module.exports.singleUpdate = async (req, res) => {
-    const { _id, text } = req.body
-    TaskTrackerModel
-        .findByIdAndUpdate(_id, { text })
-        .then(() => res.send("Single update success..."))
-    .catch((err)=>console.log(err))
-}
-
 module.exports.deleteTasks = async (req, res) => {
-    const { _id } = req.body
+    const { id } = req.params
     TaskTrackerModel
-        .findByIdAndDelete(_id)
+        .findByIdAndDelete(id)
         .then((data) => res.send(data))
         .catch((err) => console.log(err))
 }
