@@ -6,7 +6,7 @@ const routes=require('./Routes/TaskTrackerRoute')
 require('dotenv').config()
 
 const app = express()
-const PORT = process.env.port || 5000
+const PORT = process.env.PORT || 5000
 app.use (express.json())
 app.use(cors())
 

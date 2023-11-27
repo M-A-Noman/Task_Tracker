@@ -19,13 +19,14 @@ module.exports.updateTasks = async (req, res) => {
     const { _id, text, date, reminder } = req.body
     TaskTrackerModel
         .findByIdAndUpdate(_id, { text, date, reminder })
-        .then(() => res.send("Update successfully..."))
+        .then((data) => res.send(data))
         .catch((err) => console.log(err))
 }
+
 module.exports.deleteTasks = async (req, res) => {
     const { _id } = req.body
     TaskTrackerModel
         .findByIdAndDelete(_id)
-        .then(() => res.send("Deleted successfully..."))
+        .then((data) => res.send(data))
         .catch((err) => console.log(err))
 }
