@@ -3,30 +3,17 @@ const AddTask = ({onAdd}) => {
     const [text,setText]=useState('')
     const [day,setDay]=useState('')
     const [reminder, setReminder] = useState(false)
+    // console.log(day)
+    // console.log(new Date(day))
     const onSubmit = ((e) => {
         e.preventDefault()
         if (!text) {
             alert('Please add text')
             return
         }
-        // var a=-1;
-        // var temDate = (day) => {
-            
-        //     for (var i = 0; i < day.length; i++){
-        //         if (day[i] == 'T') {
-        //             a = i; break;
-        //         }
-        //         temDate+=day[i]
-        //     }
-        // }
-        // var temTime = (day) => {
-        //     for (var i = a + 1; i < day.length; i++){
-        //         temTime += day[i];
-        //     }
-        // }
-        // day=setDay(...temDate,' at ',temTime)
 
-        onAdd({ text, day, reminder })
+        onAdd({ text, date: day, reminder })
+        console.log(day)
         setText('')
         setDay('')
         setReminder(false)

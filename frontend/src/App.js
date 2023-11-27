@@ -11,19 +11,22 @@ const App = () => {
       setTasks(taskFromServer)
     }
     getTask()
-  }, [])
+  }, [tasks])
   // fetch tasks
   const fetchTasks = async () => {
-    const res = await fetch('http://localhost:5000/save')
+    const res = await fetch('http://localhost:5000')
     const data = await res.json()
+    // console.log(data)
     return data
   }
+
   // fetch task
   const fetchTask = async (id) => {
-    const res = await fetch(`http://localhost:5000/save/${id}`)
+    const res = await fetch(`http://localhost:5000/${id}`)
     const data = await res.json()
     return data
   }
+
   //add task
   const addTask = async (task) => {
     // window.alert('task added')
@@ -31,6 +34,7 @@ const App = () => {
     // const newTask = { id, ...task }
     // setTasks([...tasks, newTask])
     // setShowAddTask(!showAddTask)
+    console.log(task)
 
     const res = await fetch('http://localhost:5000/save', {
       method: 'POST',
@@ -42,17 +46,16 @@ const App = () => {
     const data =await res.json()
     setTasks([...tasks, data])
     setShowAddTask(!showAddTask)
-    
-    
   }
 
   //delete task
   const onDelete = async (id) => {
+    console.log(id)
     if (window.confirm(['Do you really want to delete the item?']) === true) {
-      await fetch(`http://localhost:5000/delete`, {
+      await fetch(`http://localhost:5000/delete/${id}`, {
         method:'DELETE'
       })
-      setTasks(tasks.filter((task) => task.id !== id))
+      setTasks(tasks.filter((task) => task._id !== id))
     } 
   }
   //toggle reminder
@@ -64,23 +67,23 @@ const App = () => {
     const taskToToggle = await fetchTask(id)
     const updTask = { ...taskToToggle, reminder: !taskToToggle.reminder }
     const res = await fetch(`http://localhost:5000/update`, {
-      method: 'PUT',
+      method: 'PATCH',
       headers: {
         'Content-type':'application/json'
       },
       body:JSON.stringify(updTask)
     })
     const data = await res.json()
-    // console.log(data)
+    console.log(data)
     
-
-
-    setTasks(
-      tasks.map((task) =>
-        task.id === id ? {...task,reminder: !data.reminder}
-          : task
+    if(data) {
+      setTasks(
+        tasks.map((task) =>
+          task.id === id ? {...task,reminder: !data.reminder}
+            : task
+        )
       )
-    )
+    }
   }
   return (
     <div className="container">

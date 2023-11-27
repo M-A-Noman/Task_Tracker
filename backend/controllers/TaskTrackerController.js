@@ -32,9 +32,9 @@ module.exports.updateTasks = async (req, res) => {
 }
 
 module.exports.deleteTasks = async (req, res) => {
-    const { id } = req.params
+    const _id = req.params.id
     TaskTrackerModel
-        .findByIdAndDelete(id)
+        .findByIdAndDelete(_id)
         .then((data) => res.send(data))
         .catch((err) => console.log(err))
 }
